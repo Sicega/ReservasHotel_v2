@@ -8,6 +8,8 @@ import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 
 public class HabitacionesTest {
 

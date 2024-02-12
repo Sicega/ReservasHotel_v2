@@ -6,6 +6,10 @@ import org.junit.jupiter.api.BeforeAll;
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.util.List;
+import org.iesalandalus.programacion.reservashotel.MainApp;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
+
+import org.iesalandalus.programacion.reservashotel.modelo.negocio.Huespedes;
 
 import static org.junit.jupiter.api.Assertions.*;
 

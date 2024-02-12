@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.reservashotel.dominio;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
 
 import static org.junit.jupiter.api.Assertions.*;
 
