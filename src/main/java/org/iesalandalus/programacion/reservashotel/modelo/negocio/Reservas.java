@@ -15,11 +15,13 @@ public class Reservas {
 
     // ArrayList para almacenar las reservas
     private final List<Reserva> coleccionReservas;
+    private int tamano;
 
     // Constructor sin parámetro de capacidad, porque ya no hace falta
     public Reservas() {
 
         this.coleccionReservas = new ArrayList<>();
+        this.tamano = 0;
     }
 
     // Devuelvo una copia profunda de las reservas
@@ -39,6 +41,11 @@ public class Reservas {
         }
 
         return misReservas;
+    }
+
+    public int getTamano() {
+
+        return tamano;
     }
 
     // Para insertar una nueva reserva en el ArrayList
