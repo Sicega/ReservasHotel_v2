@@ -26,16 +26,16 @@ public class Huespedes {
         List<Huesped> misHuesped = new ArrayList<>();
 
         // Itera sobre los huéspedes y agrega copias profundas al nuevo ArrayList
-        for (Huesped huesped : coleccionHuespedes) {
-            misHuesped.add(new Huesped(huesped));
+
+        Iterator<Huesped> huespedit = coleccionHuespedes.iterator();
+
+        while (huespedit.hasNext()){
+
+            misHuesped.add(new Huesped(huespedit.next()));
+
         }
 
         return misHuesped;
-    }
-
-    // Para obtener la capacidad de la colección
-    public int getCapacidad() {
-        return coleccionHuespedes.size();
     }
 
     // Para obtener el tamaño de la colección
@@ -82,6 +82,11 @@ public class Huespedes {
             throw new NullPointerException("ERROR: No se puede borrar un huésped nulo.");
         }
 
+        if(!coleccionHuespedes.contains(huesped)){
+
+            throw new OperationNotSupportedException("ERROR: No existe ningún huésped como el indicado.");
+        }
+
         // Utilizo un iterador para buscar y eliminar el huésped del ArrayList
         Iterator<Huesped> iterator = coleccionHuespedes.iterator();
         while (iterator.hasNext()) {
@@ -91,6 +96,6 @@ public class Huespedes {
                 return;
             }
         }
-        throw new OperationNotSupportedException("ERROR: No existe ningún huésped como el indicado.");
+
     }
 }

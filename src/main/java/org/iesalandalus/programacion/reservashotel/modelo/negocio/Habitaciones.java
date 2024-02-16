@@ -82,11 +82,6 @@ public class Habitaciones {
         return coleccionHabitaciones.indexOf(habitacion);
     }
 
-    // Método privado para verificar si un índice está fuera del tamaño actual
-    private boolean capacidadSuperada(int indice) {
-        return indice >= coleccionHabitaciones.size();
-    }
-
     // Método para buscar una habitación en la colección
     public Habitacion buscar(Habitacion habitacion) {
         if (habitacion == null) {

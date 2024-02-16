@@ -35,9 +35,14 @@ public class Reservas {
 
         List<Reserva> misReservas = new ArrayList<>();
 
+        Iterator<Reserva> reservaIt = coleccionReservas.iterator();
+
         // Itero sobre las reservas y agrego copias profundas al nuevo ArrayList
-        for (Reserva reserva : coleccionReservas) {
-            misReservas.add(new Reserva(reserva));
+
+        while(reservaIt.hasNext()){
+
+            misReservas.add(new Reserva(reservaIt.next()));
+
         }
 
         return misReservas;
@@ -74,6 +79,11 @@ public class Reservas {
             throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
         }
 
+        if(!coleccionReservas.contains(reserva)){
+
+            throw new IllegalArgumentException("ERROR: No se encontró esa reserva");
+        }
+
         // Utilizo un iterador para buscar la reserva en el ArrayList
 
         Iterator<Reserva> iterator = coleccionReservas.iterator();
@@ -93,6 +103,11 @@ public class Reservas {
             throw new NullPointerException("ERROR: No se puede borrar una reserva nula.");
         }
 
+        if (!coleccionReservas.contains(reserva)) {
+
+            throw new OperationNotSupportedException("ERROR: No existe ninguna reserva como la indicada.");
+        }
+
         // Utilizo un iterador para buscar y eliminar la reserva del ArrayList
         Iterator<Reserva> iterator = coleccionReservas.iterator();
         while (iterator.hasNext()) {
@@ -102,9 +117,6 @@ public class Reservas {
                 return;
             }
         }
-
-        // Si no encuentra la reserva, lanza una excepción
-        throw new OperationNotSupportedException("ERROR: No existe ninguna reserva como la indicada.");
     }
 
     // Para obtener las reservas de un huésped
@@ -174,6 +186,10 @@ public class Reservas {
             throw new NullPointerException("ERROR: La reserva y la fecha no pueden ser nulas.");
         }
 
+        if(!coleccionReservas.contains(reserva)){
+            throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
+        }
+
         if (fecha.isBefore(reserva.getFechaInicioReserva().atStartOfDay())) {
             throw new IllegalArgumentException("ERROR: La fecha del checkIn no puede ser anterior a la reserva.");
         }
@@ -188,8 +204,6 @@ public class Reservas {
             }
         }
 
-        // Si no encuentra la reserva, lanza una excepción
-        throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
     }
 
     // Para realizar el checkout de una reserva
@@ -200,6 +214,10 @@ public class Reservas {
 
         if (reserva.getCheckIn() == null) {
             throw new NullPointerException("ERROR: No puedes hacer checkOut si el checkIn es nulo.");
+        }
+
+        if(!coleccionReservas.contains(reserva)) {
+            throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
         }
 
         if (fecha.isBefore(reserva.getFechaInicioReserva().atStartOfDay()) || fecha.isBefore(reserva.getCheckIn())) {
@@ -216,6 +234,5 @@ public class Reservas {
             }
         }
 
-        throw new IllegalArgumentException("ERROR: No existe ninguna reserva como la indicada.");
     }
 }

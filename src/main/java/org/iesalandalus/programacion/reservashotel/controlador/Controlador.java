@@ -3,7 +3,7 @@ package org.iesalandalus.programacion.reservashotel.controlador;
 import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
 import org.iesalandalus.programacion.reservashotel.vista.Vista;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
@@ -63,7 +63,7 @@ public class Controlador {
 
     }
 
-    public Huesped [] getHuespedes(){
+    public List<Huesped> getHuespedes() {
 
         return modelo.getHuespedes();
     }
@@ -116,29 +116,22 @@ public class Controlador {
 
     }
 
-    public  Reserva [] getReservas(){
-
+    public List<Reserva> getReservas() {
         return modelo.getReservas();
-
     }
 
-    public  Reserva [] getReservas(Huesped huesped){
-
+    public List<Reserva> getReservas(Huesped huesped) {
         return modelo.getReservas(huesped);
-
     }
 
-    public  Reserva [] getReservas(TipoHabitacion tipoHabitacion){
-
+    public List<Reserva> getReservas(TipoHabitacion tipoHabitacion) {
         return modelo.getReservas(tipoHabitacion);
-
     }
 
-    public  Reserva [] getReservasFuturas(Habitacion habitacion){
-
+    public List<Reserva> getReservasFuturas(Habitacion habitacion) {
         return modelo.getReservasFuturas(habitacion);
-
     }
+
 
     //Métodos para gestionar checkIn y checkOut
 

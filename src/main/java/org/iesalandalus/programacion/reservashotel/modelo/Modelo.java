@@ -58,11 +58,8 @@ public class Modelo {
 
     }
 
-    public Huesped[] getHuespedes() { //Modifico el método para adaptarlo a la lista
-
-        List<Huesped> listaHuespedes = huespedes.get();
-
-        return listaHuespedes.toArray(new Huesped[0]);
+    public List<Huesped> getHuespedes() {
+        return huespedes.get();
     }
 
     // Métodos para gestionar habitaciones
@@ -84,10 +81,12 @@ public class Modelo {
     }
 
     public List<Habitacion> getHabitaciones() {
+
         return habitaciones.get();
     }
 
     public List<Habitacion> getHabitaciones(TipoHabitacion tipoHabitacion) {
+
         return habitaciones.get(tipoHabitacion);
     }
 
@@ -113,25 +112,22 @@ public class Modelo {
 
     //Modifico los métodos de getReservas para que hagan uso de las listas
 
-    public Reserva[] getReservas() {
-        List<Reserva> listaReservas = reservas.get();
-        return listaReservas.toArray(new Reserva[0]);
+    public List<Reserva> getReservas() {
+        return reservas.get();
     }
 
-    public Reserva[] getReservas(Huesped huesped) {
-        List<Reserva> listaReservas = reservas.getReservas(huesped);
-        return listaReservas.toArray(new Reserva[0]);
+    public List<Reserva> getReservas(Huesped huesped) {
+        return reservas.getReservas(huesped);
     }
 
-    public Reserva[] getReservas(TipoHabitacion tipoHabitacion) {
-        List<Reserva> listaReservas = reservas.getReservas(tipoHabitacion);
-        return listaReservas.toArray(new Reserva[0]);
+    public List<Reserva> getReservas(TipoHabitacion tipoHabitacion) {
+        return reservas.getReservas(tipoHabitacion);
     }
 
-    public Reserva[] getReservasFuturas(Habitacion habitacion) {
-        List<Reserva> listaReservas = reservas.getReservasFuturas(habitacion);
-        return listaReservas.toArray(new Reserva[0]);
+    public List<Reserva> getReservasFuturas(Habitacion habitacion) {
+        return reservas.getReservasFuturas(habitacion);
     }
+
 
     //Métodos para gestionar checkIn y checkOut
 

@@ -1,10 +1,13 @@
 package org.iesalandalus.programacion.reservashotel.vista;
 
+import org.iesalandalus.programacion.reservashotel.controlador.Controlador;
 import org.iesalandalus.programacion.utilidades.Entrada;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.EnumSet;
+import java.util.Iterator;
 
 public class Consola {
 
@@ -105,7 +108,7 @@ public class Consola {
 
         while (!fechaValida) {
 
-            System.out.print("Formato dd/MM/yyyy");
+            System.out.println("Formato dd/MM/yyyy");
 
             fecha = Entrada.cadena();
 
@@ -171,10 +174,11 @@ public class Consola {
 
         System.out.println("Tipos de habitación:");
 
-        for (TipoHabitacion tipo : TipoHabitacion.values()) {
+        Iterator<TipoHabitacion> iterador = EnumSet.allOf(TipoHabitacion.class).iterator();
 
-            System.out.println(tipo); // Imprime los tipos de habitación disponibles
+        while (iterador.hasNext()) {
 
+            System.out.println(iterador.next());
         }
 
         System.out.print("Elige un tipo de habitación: ");
@@ -185,7 +189,8 @@ public class Consola {
 
             tipoElegido = Entrada.entero();
 
-        }while(tipoElegido <0 || tipoElegido >= TipoHabitacion.values().length);
+        } while (tipoElegido < 0 || tipoElegido >= TipoHabitacion.values().length);
+
 
         return TipoHabitacion.values()[tipoElegido];
     }
@@ -194,13 +199,14 @@ public class Consola {
 
         System.out.println("Tipos de régimen:");
 
-        for (Regimen regimen : Regimen.values()) {
+        Iterator<Regimen> iterador = EnumSet.allOf(Regimen.class).iterator();
 
-            System.out.println(regimen); // Imprime los tipos de régimen disponibles
+        while (iterador.hasNext()) {
+
+            System.out.println(iterador.next());
         }
 
         System.out.print("Elige un tipo de régimen: ");
-
 
         int regimenElegido = Entrada.entero();
 
@@ -230,10 +236,12 @@ public class Consola {
 
         // Llama a los métodos de la clase Consola para obtener los objetos Huesped, Habitacion, Regimen, etc.
 
-        Huesped huesped = leerHuesped();
-        Habitacion habitacion = leerHabitacion();
+        Huesped huesped = leerHuespedPorDni();
+        Habitacion habitacion = leerHabitacionPorIdentificador();
         Regimen regimen=leerRegimen();
+        System.out.println("Indica la fecha de inicio de la reserva:");
         LocalDate fechaInicioReserva = leerFecha();
+        System.out.println("Indica la fecha de fin de la reserva:");
         LocalDate fechaFinReserva = leerFecha();
         int numeroPersonas= leerNumeroPersonas();
 
