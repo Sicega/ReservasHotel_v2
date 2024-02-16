@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.reservashotel.modelo;
 
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
 import org.iesalandalus.programacion.reservashotel.modelo.negocio.*;
+import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class Modelo {
     public Modelo(){ // Creo el constructor que inicializa las instancias de las clases de negocio
 
         huespedes = new Huespedes(CAPACIDAD);
-        habitaciones = new Habitaciones(CAPACIDAD);
+        habitaciones = new Habitaciones();
         reservas = new Reservas(CAPACIDAD);
 
     }
@@ -79,13 +80,11 @@ public class Modelo {
         habitaciones.borrar(habitacion);
     }
 
-    public Habitacion [] getHabitaciones(){
-
+    public List<Habitacion> getHabitaciones() {
         return habitaciones.get();
     }
 
-    public Habitacion [] getHabitaciones(TipoHabitacion tipoHabitacion){
-
+    public List<Habitacion> getHabitaciones(TipoHabitacion tipoHabitacion) {
         return habitaciones.get(tipoHabitacion);
     }
 

@@ -4,6 +4,8 @@ import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
 import org.iesalandalus.programacion.reservashotel.vista.Vista;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDateTime;
 
@@ -85,16 +87,12 @@ public class Controlador {
 
     }
 
-    public Habitacion [] getHabitaciones(){
-
+    public List<Habitacion> getHabitaciones() {
         return modelo.getHabitaciones();
-
     }
 
-    public Habitacion [] getHabitaciones(TipoHabitacion tipoHabitacion){
-
+    public List<Habitacion> getHabitaciones(TipoHabitacion tipoHabitacion) {
         return modelo.getHabitaciones(tipoHabitacion);
-
     }
 
 

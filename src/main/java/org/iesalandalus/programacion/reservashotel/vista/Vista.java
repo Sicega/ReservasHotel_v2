@@ -8,6 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 public class Vista {
 
@@ -224,21 +227,16 @@ public class Vista {
 
     }
 
-    private static void mostrarHabitaciones(){ // Muestra todas las habitaciones
+    private static void mostrarHabitaciones() {
+        List<Habitacion> listaHabitaciones = controlador.getHabitaciones();
 
-        Habitacion[] listaHabitaciones = controlador.getHabitaciones();
-
-        if (listaHabitaciones.length > 0) {
-
+        if (!listaHabitaciones.isEmpty()) {
             for (Habitacion habitacion : listaHabitaciones) {
-
                 System.out.println(habitacion);
             }
         } else {
-
             System.out.println("No hay habitaciones registradas.");
         }
-
     }
 
     private static void insertarReserva(){ // Inserta una nueva reserva
@@ -412,90 +410,59 @@ public class Vista {
         return contador;
     }
 
-    private static Habitacion consultarDisponibilidad(TipoHabitacion tipoHabitacion, LocalDate fechaInicioReserva, LocalDate fechaFinReserva)
-    {
-        boolean tipoHabitacionEncontrada=false;
-        Habitacion habitacionDisponible=null;
-        int numElementos=0;
+    private static Habitacion consultarDisponibilidad(TipoHabitacion tipoHabitacion, LocalDate fechaInicioReserva, LocalDate fechaFinReserva) {
+        boolean tipoHabitacionEncontrada = false;
+        Habitacion habitacionDisponible = null;
 
-        Habitacion[] habitacionesTipoSolicitado= controlador.getHabitaciones(tipoHabitacion);
+        List<Habitacion> habitacionesTipoSolicitado = Arrays.asList((Habitacion) controlador.getHabitaciones(tipoHabitacion));
 
-        if (habitacionesTipoSolicitado==null)
+        if (habitacionesTipoSolicitado == null || habitacionesTipoSolicitado.isEmpty()) {
             return habitacionDisponible;
+        }
 
-        for (int i=0; i<habitacionesTipoSolicitado.length && !tipoHabitacionEncontrada; i++)
-        {
+        for (Habitacion habitacion : habitacionesTipoSolicitado) {
+            if (habitacion != null) {
+                List<Reserva> reservasFuturas = Arrays.asList(controlador.getReservasFuturas(habitacion));
 
-            if (habitacionesTipoSolicitado[i]!=null)
-            {
-                Reserva[] reservasFuturas = controlador.getReservasFuturas(habitacionesTipoSolicitado[i]);
-                numElementos=getNumElementosNoNulos(reservasFuturas);
+                if (reservasFuturas.isEmpty()) {
+                    habitacionDisponible = new Habitacion(habitacion);
+                    tipoHabitacionEncontrada = true;
+                } else {
+                    // Ordenamos de mayor a menor las reservas futuras por fecha de fin de la reserva.
+                    reservasFuturas.sort(Comparator.comparing(Reserva::getFechaFinReserva).reversed());
 
-                if (numElementos == 0)
-                {
-                    //Si la primera de las habitaciones encontradas del tipo solicitado no tiene reservas en el futuro,
-                    // quiere decir que está disponible.
-
-                    habitacionDisponible=new Habitacion(habitacionesTipoSolicitado[i]);
-
-                    tipoHabitacionEncontrada=true;
-                }
-                else {
-
-                    //Ordenamos de mayor a menor las reservas futuras encontradas por fecha de fin de la reserva.
-                    // Si la fecha de inicio de la reserva es posterior a la mayor de las fechas de fin de las reservas
-                    // (la reserva de la posición 0), quiere decir que la habitación está disponible en las fechas indicadas.
-
-                    Arrays.sort(reservasFuturas, 0, numElementos, Comparator.comparing(Reserva::getFechaFinReserva).reversed());
-
-                    /*System.out.println("\n\nMostramos las reservas ordenadas por fecha de inicio de menor a mayor (numelementos="+numElementos+")");
-                    mostrar(reservasFuturas);*/
-
-                    if (fechaInicioReserva.isAfter(reservasFuturas[0].getFechaFinReserva())) {
-
-                        habitacionDisponible = new Habitacion(habitacionesTipoSolicitado[i]);
-
+                    if (fechaInicioReserva.isAfter(reservasFuturas.get(0).getFechaFinReserva())) {
+                        habitacionDisponible = new Habitacion(habitacion);
                         tipoHabitacionEncontrada = true;
                     }
 
-                    if (!tipoHabitacionEncontrada)
-                    {
-                        //Ordenamos de menor a mayor las reservas futuras encontradas por fecha de inicio de la reserva.
-                        // Si la fecha de fin de la reserva es anterior a la menor de las fechas de inicio de las reservas
-                        // (la reserva de la posición 0), quiere decir que la habitación está disponible en las fechas indicadas.
+                    if (!tipoHabitacionEncontrada) {
+                        // Ordenamos de menor a mayor las reservas futuras por fecha de inicio de la reserva.
+                        reservasFuturas.sort(Comparator.comparing(Reserva::getFechaInicioReserva));
 
-                        Arrays.sort(reservasFuturas, 0, numElementos, Comparator.comparing(Reserva::getFechaInicioReserva));
-
-                        /*System.out.println("\n\nMostramos las reservas ordenadas por fecha de inicio de menor a mayor (numelementos="+numElementos+")");
-                        mostrar(reservasFuturas);*/
-
-                        if (fechaFinReserva.isBefore(reservasFuturas[0].getFechaInicioReserva())) {
-                            habitacionDisponible = new Habitacion(habitacionesTipoSolicitado[i]);
+                        if (fechaFinReserva.isBefore(reservasFuturas.get(0).getFechaInicioReserva())) {
+                            habitacionDisponible = new Habitacion(habitacion);
                             tipoHabitacionEncontrada = true;
                         }
                     }
 
-                    //Recorremos el array de reservas futuras para ver si las fechas solicitadas están algún hueco existente entre las fechas reservadas
+                    // Recorremos la lista de reservas futuras para verificar si las fechas solicitadas están disponibles.
+                    if (!tipoHabitacionEncontrada) {
+                        Iterator<Reserva> iterator = reservasFuturas.iterator();
+                        Reserva reservaAnterior = iterator.next();
 
-                    if (!tipoHabitacionEncontrada)
-                    {
-                        for(int j=1;j<reservasFuturas.length && !tipoHabitacionEncontrada;j++)
-                        {
-                            if (reservasFuturas[j]!=null && reservasFuturas[j-1]!=null)
-                            {
-                                if(fechaInicioReserva.isAfter(reservasFuturas[j-1].getFechaFinReserva()) &&
+                        while (iterator.hasNext() && !tipoHabitacionEncontrada) {
+                            Reserva reservaActual = iterator.next();
 
-                                        fechaFinReserva.isBefore(reservasFuturas[j].getFechaInicioReserva())) {
-
-                                    habitacionDisponible = new Habitacion(habitacionesTipoSolicitado[i]);
-
-                                    tipoHabitacionEncontrada = true;
-                                }
+                            if (fechaInicioReserva.isAfter(reservaAnterior.getFechaFinReserva()) &&
+                                    fechaFinReserva.isBefore(reservaActual.getFechaInicioReserva())) {
+                                habitacionDisponible = new Habitacion(habitacion);
+                                tipoHabitacionEncontrada = true;
                             }
+
+                            reservaAnterior = reservaActual;
                         }
                     }
-
-
                 }
             }
         }
