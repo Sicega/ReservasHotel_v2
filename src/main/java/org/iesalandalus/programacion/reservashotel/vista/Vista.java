@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class Vista {
 
@@ -159,22 +161,18 @@ public class Vista {
 
     }
 
-    private static void mostrarHuespedes(){ // Muestra todos los huéspedes
+    private static void mostrarHuespedes(){ // Muestra todos los huéspedes ordenados de la A a la Z
 
 
-        Huesped[] listaHuespedes = controlador.getHuespedes();
+        // Obtener la lista de huéspedes desde la clase controlador
+        List<Huesped> listaHuespedes = List.of(controlador.getHuespedes());
 
-        if (listaHuespedes.length > 0) {
-
-
-
-            for (Huesped huesped : listaHuespedes) {
-
-                System.out.println(huesped);
-            }
-
+        if (!listaHuespedes.isEmpty()) {
+            // Ordenar la lista alfabéticamente por el nombre (de la A a la Z)
+            listaHuespedes.stream()
+                    .sorted(Comparator.comparing(Huesped::getNombre))
+                    .forEach(System.out::println);
         } else {
-
             System.out.println("No hay huéspedes registrados.");
         }
 
@@ -228,12 +226,14 @@ public class Vista {
     }
 
     private static void mostrarHabitaciones() {
+        // Obtiene la lista de habitaciones desde la clase controlador
         List<Habitacion> listaHabitaciones = controlador.getHabitaciones();
 
         if (!listaHabitaciones.isEmpty()) {
-            for (Habitacion habitacion : listaHabitaciones) {
-                System.out.println(habitacion);
-            }
+            // Ordena la lista por planta y puerta en orden ascendente
+            listaHabitaciones.stream()
+                    .sorted(Comparator.comparing(Habitacion::getPlanta).thenComparing(Habitacion::getPuerta))
+                    .forEach(System.out::println);
         } else {
             System.out.println("No hay habitaciones registradas.");
         }
@@ -258,17 +258,19 @@ public class Vista {
 
     private static void listarReservas(Huesped huesped){ // Lista las reservas de un huésped
 
-        Reserva[] reservasHuesped =  controlador.getReservas(huesped);
+        // Obtiene la lista de reservas para el huésped desde la clase controlador
+        List<Reserva> reservasHuesped = List.of(controlador.getReservas(huesped));
 
-        if (reservasHuesped.length > 0) {
-
-            for (Reserva reserva : reservasHuesped) {
-
-                System.out.println(reserva);
-            }
+        if (!reservasHuesped.isEmpty()) {
+            // Ordena la lista de reservas por fecha de inicio en orden descendente
+            // En caso de empate, ordena por número de planta y puerta en orden ascendente
+            reservasHuesped.stream()
+                    .sorted(Comparator.comparing(Reserva::getFechaInicioReserva).reversed()
+                            .thenComparing(Comparator.comparing(reserva -> reserva.getHabitacion().getPlanta()))
+                            .thenComparing(Comparator.comparing(reserva -> reserva.getHabitacion().getPuerta())))
+                    .forEach(System.out::println);
         } else {
-
-            System.out.println("El huésped no tiene reservas.");
+            System.out.println("No hay reservas para el huésped seleccionado.");
         }
 
     }
@@ -383,11 +385,22 @@ public class Vista {
 
     private static void mostrarReservas(){ // Muestra todas las reservas
 
-        Reserva [] listaReservas = controlador.getReservas();
-        if (listaReservas.length > 0) {
-            for (Reserva reserva : listaReservas) {
-                System.out.println(reserva);
-            }
+        // Obtiene la lista de reservas desde la clase controlador
+        List<Reserva> listaReservas = List.of(controlador.getReservas());
+
+        if (!listaReservas.isEmpty()) {
+            // Ordenar la lista por la fecha de inicio en orden descendente
+            // En caso de empate, aplica la segunda ordenación por habitación en orden ascendente
+            listaReservas.stream()
+                    .sorted(Comparator.comparing(Reserva::getFechaInicioReserva).reversed()
+                            .thenComparing(reserva -> {
+                                if (reserva.getHabitacion() != null) {
+                                    // Ordena por número de planta y puerta en orden ascendente
+                                    return reserva.getHabitacion().getIdentificador();
+                                }
+                                return null;
+                            }))
+                    .forEach(System.out::println);
         } else {
             System.out.println("No hay reservas registradas.");
         }
