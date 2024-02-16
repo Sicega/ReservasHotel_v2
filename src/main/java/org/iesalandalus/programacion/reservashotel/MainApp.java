@@ -16,10 +16,6 @@ public class MainApp {
         Vista vista = new Vista();
         Controlador controlador = new Controlador(modelo, vista);
 
-        // Configuro la vista con el controlador
-
-        vista.setControlador(controlador);
-
         // Inicio la aplicación invocando el método comenzar del controlador
 
         controlador.comenzar();
