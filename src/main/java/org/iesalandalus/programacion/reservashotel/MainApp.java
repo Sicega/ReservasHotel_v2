@@ -6,8 +6,6 @@ import org.iesalandalus.programacion.reservashotel.vista.Vista;
 
 public class MainApp {
 
-    public static final int CAPACIDAD = 10; //Inicializo la constante
-
     public static void main(String[] args) {
 
         // Creo instancias de modelo, vista y controlador
@@ -20,8 +18,5 @@ public class MainApp {
 
         controlador.comenzar();
     }
-
-
-
 
 }

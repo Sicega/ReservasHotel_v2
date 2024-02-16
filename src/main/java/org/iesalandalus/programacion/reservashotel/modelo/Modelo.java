@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 public class Modelo {
 
-    private static final int CAPACIDAD=10; //Inicializo la constante CAPACIDAD
-
     private Huespedes huespedes;
     private Habitaciones habitaciones;
     private Reservas reservas;
@@ -19,9 +17,9 @@ public class Modelo {
 
     public Modelo(){ // Creo el constructor que inicializa las instancias de las clases de negocio
 
-        huespedes = new Huespedes(CAPACIDAD);
+        huespedes = new Huespedes();
         habitaciones = new Habitaciones();
-        reservas = new Reservas(CAPACIDAD);
+        reservas = new Reservas();
 
     }
 
