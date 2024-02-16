@@ -298,6 +298,4 @@ public class Huesped {
 
                 nombre, dni, correo, telefono, fechaNacimiento.format(DateTimeFormatter.ofPattern(FORMATO_FECHA)));
     }
-
-
 }

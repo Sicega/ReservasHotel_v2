@@ -45,7 +45,7 @@ public class Reservas {
 
     public int getTamano() {
 
-        return tamano;
+        return coleccionReservas.size(); //Modifico el método getTamano para que tenga en cuenta el tamaño del Arraylist
     }
 
     // Para insertar una nueva reserva en el ArrayList
@@ -71,7 +71,7 @@ public class Reservas {
     // Para buscar una reserva en la colección
     public Reserva buscar(Reserva reserva) {
         if (reserva == null) {
-            throw new NullPointerException("error nulo");
+            throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
         }
 
         // Utilizo un iterador para buscar la reserva en el ArrayList
@@ -110,7 +110,7 @@ public class Reservas {
     // Para obtener las reservas de un huésped
     public List<Reserva> getReservas(Huesped huesped) {
         if (huesped == null) {
-            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huésped nulo.");
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo.");
         }
 
         List<Reserva> miReserva = new ArrayList<>();

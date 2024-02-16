@@ -90,7 +90,7 @@ public class Habitaciones {
     // Método para buscar una habitación en la colección
     public Habitacion buscar(Habitacion habitacion) {
         if (habitacion == null) {
-            throw new NullPointerException("error nulo");
+            throw new NullPointerException("ERROR: No se puede buscar una habitación nula.");
         }
 
         // Busco el índice de la habitación en la colección
