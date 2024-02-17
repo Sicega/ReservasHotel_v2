@@ -58,6 +58,8 @@ public class Modelo {
 
     }
 
+    //Cambio los métodos que ahora deben usar listas
+
     public List<Huesped> getHuespedes() {
         return huespedes.get();
     }

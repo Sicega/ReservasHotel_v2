@@ -98,7 +98,7 @@ public class Reservas {
             throw new NullPointerException("ERROR: No se puede borrar una reserva nula.");
         }
 
-        if (!coleccionReservas.contains(reserva)) {
+        if (!coleccionReservas.contains(reserva)) { //Si en la colección no se encuentra la reserva introducida salta excepción
 
             throw new OperationNotSupportedException("ERROR: No existe ninguna reserva como la indicada.");
         }

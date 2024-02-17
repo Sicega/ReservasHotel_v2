@@ -27,18 +27,18 @@ public class Huespedes {
 
         // Itera sobre los huéspedes y agrega copias profundas al nuevo ArrayList
 
-        Iterator<Huesped> huespedit = coleccionHuespedes.iterator();
+        Iterator<Huesped> huespedIt = coleccionHuespedes.iterator();
 
-        while (huespedit.hasNext()){
+        while (huespedIt.hasNext()){
 
-            misHuesped.add(new Huesped(huespedit.next()));
+            misHuesped.add(new Huesped(huespedIt.next()));
 
         }
 
         return misHuesped;
     }
 
-    // Para obtener el tamaño de la colección
+    // Para obtener el tamaño de la lista
     public int getTamano() {
         return coleccionHuespedes.size();
     }
