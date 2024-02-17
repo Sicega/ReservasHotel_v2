@@ -87,7 +87,7 @@ public class Huespedes {
             throw new OperationNotSupportedException("ERROR: No existe ningún huésped como el indicado.");
         }
 
-        // Utilizo un iterador para buscar y eliminar el huésped del ArrayList
+        // Utilizo un iterador para buscar y eliminar el huésped del ArrayList con remove
         Iterator<Huesped> iterator = coleccionHuespedes.iterator();
         while (iterator.hasNext()) {
             Huesped actual = iterator.next();

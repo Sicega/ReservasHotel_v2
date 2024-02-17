@@ -311,7 +311,7 @@ public class Vista {
             // En caso de empate, ordena por número de planta y puerta en orden ascendente
 
             Iterator<Reserva> iterator = reservasHuesped.stream()
-                    .sorted(Comparator.comparing(Reserva::getFechaInicioReserva).reversed()
+                    .sorted(Comparator.comparing(Reserva::getFechaInicioReserva).reversed() // Con reversed ordena por orden descendente en vez de ascendente
                             .thenComparing((reserva -> reserva.getHabitacion().getPlanta()))
                             .thenComparing((reserva -> reserva.getHabitacion().getPuerta())))
                     .iterator();
@@ -430,7 +430,7 @@ public class Vista {
 
         if (!listaReservas.isEmpty()) {
 
-            Iterator<Reserva> iterator = listaReservas.stream() // Con stream ordeno la lista y utilizo el método sorted para ordenar por fecha de inicio en orden descendente
+            Iterator<Reserva> iterator = listaReservas.stream() // Con stream ordeno la lista y utilizo el método sorted y reversed para ordenar por fecha de inicio en orden descendente
                     .sorted(Comparator.comparing(Reserva::getFechaInicioReserva).reversed()
                             .thenComparing(reserva -> { // En caso de empate, con then comparing se ordena por habitación en orden ascendente
                                 if (reserva.getHabitacion() != null) {
