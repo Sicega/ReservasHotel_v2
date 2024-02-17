@@ -1,6 +1,5 @@
 package org.iesalandalus.programacion.reservashotel.vista;
 
-import org.iesalandalus.programacion.reservashotel.controlador.Controlador;
 import org.iesalandalus.programacion.utilidades.Entrada;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
 import java.time.LocalDate;
@@ -158,7 +157,7 @@ public class Consola {
         int puerta = Entrada.entero();
 
 
-        try {
+       try {
 
             return new Habitacion(planta,puerta,50);
 
@@ -166,7 +165,7 @@ public class Consola {
 
             System.out.println(e.getMessage());
 
-            return null;
+           return null;
         }
     }
 

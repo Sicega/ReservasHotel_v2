@@ -79,11 +79,6 @@ public class Reservas {
             throw new NullPointerException("ERROR: No se puede buscar una reserva nula.");
         }
 
-        if(!coleccionReservas.contains(reserva)){
-
-            throw new IllegalArgumentException("ERROR: No se encontró esa reserva");
-        }
-
         // Utilizo un iterador para buscar la reserva en el ArrayList
 
         Iterator<Reserva> iterator = coleccionReservas.iterator();
